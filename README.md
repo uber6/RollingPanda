@@ -24,7 +24,7 @@ Public-key authentication is **not** supported.
 ## Quick start
 
 ```bash
-git clone <your-repo-url> RollingPanda
+git clone https://github.com/uber6/RollingPanda.git
 cd RollingPanda
 cargo build --release
 ```
