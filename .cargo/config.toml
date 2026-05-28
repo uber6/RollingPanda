@@ -1,0 +1,11 @@
+# Extra linker size opts (used with [profile.release] in Cargo.toml).
+# MSVC: remove unreferenced code/data. GNU: same via --gc-sections.
+
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "link-arg=/OPT:REF", "-C", "link-arg=/OPT:ICF"]
+
+[target.x86_64-unknown-linux-gnu]
+rustflags = ["-C", "link-arg=-Wl,--gc-sections"]
+
+[target.aarch64-unknown-linux-gnu]
+rustflags = ["-C", "link-arg=-Wl,--gc-sections"]

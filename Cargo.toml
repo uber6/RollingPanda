@@ -1,0 +1,43 @@
+[package]
+name = "rollingpanda"
+version = "0.1.0"
+edition = "2024"
+description = "Lightweight SSH server with compile-time baked credentials (DropBear-style)"
+license = "MIT"
+readme = "README.md"
+
+[dependencies]
+anyhow = { version = "1", default-features = false, features = ["std"] }
+bytes = "1"
+clap = { version = "4", default-features = false, features = ["std", "derive", "help", "usage"] }
+portable-pty = "0.9"
+# `flate2` omitted — server advertises compression "none" only; drops zlib from the binary.
+russh = { version = "0.61", default-features = false, features = ["ring"] }
+rand = { version = "0.10", default-features = false, features = ["thread_rng"] }
+subtle = { version = "2", default-features = false }
+tokio = { version = "1", default-features = false, features = [
+    "rt-multi-thread",
+    "macros",
+    "net",
+    "sync",
+    "io-util",
+    "time",
+] }
+tracing = { version = "0.1", default-features = false }
+tracing-subscriber = { version = "0.3", default-features = false, features = ["fmt", "env-filter"] }
+
+# Smallest practical release binary. Rebuild: cargo build --release
+[profile.release]
+opt-level = "z"       # optimize for size (over speed)
+lto = "fat"             # link-time optimize the whole crate graph
+codegen-units = 1       # one CGU per crate = better LTO, slower compile
+strip = true            # remove symbol tables from the final binary
+panic = "abort"         # no unwinding tables (requires no panic! in hot paths)
+debug = false
+incremental = false
+overflow-checks = false
+
+# Apply size opts to every dependency, not only the root crate.
+[profile.release.package."*"]
+opt-level = "z"
+codegen-units = 1
