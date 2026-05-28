@@ -3,7 +3,7 @@ name = "rollingpanda"
 version = "0.1.0"
 edition = "2024"
 description = "Lightweight SSH server with compile-time baked credentials (DropBear-style)"
-license = "AGPL-3.0-or-later"
+license = "Apache-2.0"
 readme = "README.md"
 
 [dependencies]
