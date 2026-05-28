@@ -216,4 +216,6 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ...
 
 ## License
 
-MIT
+Licensed under the [GNU Affero General Public License v3.0 or later](https://www.gnu.org/licenses/agpl-3.0.html) (AGPL-3.0-or-later). See [LICENSE](LICENSE).
+
+You may use RollingPanda commercially (run it, embed it, offer network services). If you modify it and distribute it or offer it over a network, you must release your changes under the same license.
