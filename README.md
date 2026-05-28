@@ -1,8 +1,14 @@
 # RollingPanda
 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+
 A lightweight **SSH-2 server** in Rust, inspired by [DropBear](https://matt.ucc.asn.au/dropbear/dropbear.html). RollingPanda does **not** use system accounts (`/etc/passwd`, PAM, or Windows users). It authenticates only against a **username and password compiled into the binary**.
 
+**Repository:** [github.com/uber6/RollingPanda](https://github.com/uber6/RollingPanda)
+
 Typical uses: embedded devices, appliances, lab jump boxes, or any host where you want a fixed SSH login without provisioning OS users.
+
+> **Security:** Default credentials are for local testing only. Rebuild with your own `ROLLINGPANDA_*` values before any real deployment.
 
 ## Features
 
@@ -145,11 +151,13 @@ RUST_LOG=russh=debug,rollingpanda=debug ./target/release/rollingpanda
 
 ```text
 RollingPanda/
-  src/main.rs       CLI, server startup
-  src/creds.rs      Compile-time username, password, and default port
-  src/hostkey.rs    In-memory or file-backed Ed25519 host key
-  src/handler.rs    SSH auth, channels, algorithm preferences
-  src/shell.rs      PTY bridge (shell and exec)
+  src/main.rs         CLI, server startup
+  src/creds.rs        Compile-time username, password, and default port
+  src/hostkey.rs      In-memory or file-backed Ed25519 host key
+  src/handler.rs      SSH auth, channels, algorithm preferences
+  src/shell.rs        PTY bridge (shell and exec)
+  src/pty_filter.rs   Windows: strip ConPTY CSI private-mode sequences
+  .cargo/config.toml  Release linker size opts (MSVC / GNU)
 ```
 
 ## Troubleshooting
@@ -216,6 +224,21 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ...
 
 ## License
 
-Licensed under the [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0). See [LICENSE](LICENSE) and [NOTICE](NOTICE).
+Licensed under the [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 
-You may use, modify, and distribute RollingPanda (including commercially). Keep the copyright and license notices in copies and derivative works—do not remove [NOTICE](NOTICE) or [LICENSE](LICENSE).
+| File | Purpose |
+|------|---------|
+| [LICENSE](LICENSE) | Full Apache 2.0 legal text |
+| [NOTICE](NOTICE) | Copyright and attribution for RollingPanda |
+
+You may use, modify, and distribute RollingPanda (including commercially).
+
+### Forks and derivatives
+
+When you redistribute source or binaries (including modified builds):
+
+1. Include [LICENSE](LICENSE) and [NOTICE](NOTICE) unchanged, or with your own copyright line **added** (do not remove the original notice).
+2. State clearly if your project is a fork and not the upstream RollingPanda release.
+3. Do not use the author’s name to imply endorsement of your derivative without permission.
+
+Questions or contributions: open an issue or pull request on [GitHub](https://github.com/uber6/RollingPanda).
